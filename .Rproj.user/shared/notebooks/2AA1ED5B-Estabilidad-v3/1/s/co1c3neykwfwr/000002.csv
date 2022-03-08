@@ -1,0 +1,2 @@
+"0","ggplot(df, aes(x=Par, y=as.numeric(Similitud), fill=Distancia))+"
+"0","  geom_boxplot() #+"

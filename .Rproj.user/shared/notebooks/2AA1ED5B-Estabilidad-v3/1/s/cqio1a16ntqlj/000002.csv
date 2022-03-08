@@ -1,0 +1,7 @@
+"0","distancia = names(distances.list)[2]"
+"0","sub1 = subset(df, Distancia==(distancia))"
+"0","sub1$Similitud = as.numeric(sub1$Similitud)"
+"0","ggplot(sub1, aes(x=Par, y=as.numeric(Similitud), color=Distancia))+"
+"0","  geom_boxplot() +"
+"0","  #stat_smooth(se = FALSE)+"
+"0","  labs(title = distancia)# +"

@@ -1,0 +1,13 @@
+Package: TSSimilarityIndeces
+Version: 0.0.1.0
+Type: Package
+Date: 2021-09-29
+Title: Time Series Similarity Indices
+Author: Juan Carlos Bellassai Gauto <juancbellassai@gmail.com>
+Encoding: UTF-8
+Imports: 
+	dtw,
+	philentropy,
+	RMThreshold,
+	SpatialPack
+RoxygenNote: 7.1.2

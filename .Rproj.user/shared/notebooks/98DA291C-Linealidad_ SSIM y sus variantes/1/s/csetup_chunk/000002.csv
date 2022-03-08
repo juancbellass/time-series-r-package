@@ -1,0 +1,7 @@
+"0","setwd(""C:/Users/Usuario/Google Drive (juancbellassai@mi.unc.edu.ar)/Juanc Doctorado/2021/Scrips/My_own_R_packages"")"
+"2","The working directory was changed to C:/Users/Usuario/Google Drive (juancbellassai@mi.unc.edu.ar)/Juanc Doctorado/2021/Scrips/My_own_R_packages inside a notebook chunk. The working directory will be reset when the chunk is finished running. Use the knitr root.dir option in the setup chunk to change the working directory for notebook chunks."
+"0","library(devtools)"
+"0","load_all(""."")"
+"2","[36mi[39m Loading [34m[34mTSSimilarityIndeces[34m[39m
+"
+"0","library(ggplot2)"

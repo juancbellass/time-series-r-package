@@ -1,0 +1,6 @@
+"0","#Cargamos los datasets"
+"0","setwd(""C:/Users/Usuario/Google Drive (juancbellassai@mi.unc.edu.ar)/Juanc Doctorado/Base de datos/AR1-MA1-ARIMA_simulados"")"
+"0",""
+"0","fullAR1 = read.csv(""AR1_TRAIN.csv"")"
+"0","fullMA1 = read.csv(""Ma1_TRAIN.csv"")"
+"0","fullARIMA = read.csv(""ARIMA_TRAIN.csv"")"
