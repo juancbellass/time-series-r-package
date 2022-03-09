@@ -4,9 +4,13 @@
 \alias{SSIMT}
 \title{SSIMT INDEX}
 \usage{
-SSIMT(X, Y)
+SSIMT(x, y, FUN = mean, ...)
 }
 \arguments{
+\item{FUN}{mean by default.}
+
+\item{...}{some other parameter required by the function FUN.}
+
 \item{X}{a time series of length n with real values.}
 
 \item{Y}{a time series of length n with real values.}

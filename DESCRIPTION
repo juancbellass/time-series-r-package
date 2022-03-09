@@ -8,6 +8,4 @@ Encoding: UTF-8
 Imports: 
 	dtw,
 	philentropy,
-	RMThreshold,
-	SpatialPack
 RoxygenNote: 7.1.2

@@ -4,14 +4,14 @@
 \alias{CHOU}
 \title{CHOUAKRIA INDEX}
 \usage{
-CHOU(S1, S2, k = 3.1)
+CHOU(x, y, FUN, k = 3.1)
 }
 \arguments{
+\item{k}{a equal to 3.1 by default.}
+
 \item{S1}{a time series of length n with real values.}
 
 \item{S2}{a time series of length n with real values.}
-
-\item{k}{a equal to 3.1 by default.}
 }
 \value{
 D a positive real number plus 0; where 0 means max similarity.
