@@ -71,19 +71,19 @@ TS.SaltPepper <- function(S, epsi) {
   return(S1)
 }
 
-#' Aditive Gaussian Noise
+#' Additive Gaussian Noise
 #' 
-#' Generates a matrix _C_ from an initial matrix _Y_ and a matrix \Nu of the same 
-#' dimension. \Nu values follow an $N(\mu, \sigma^2)$ distribution. The _prop_% of 
-#' the elements of the array _Y_ are selected randomly. If $Y_{i,j$} is selected 
-#' then it is replaced by $Y_{i,j} + \Nu_{i,j}$. This procedure is called additive 
+#' Generates a matrix _C_ from an initial matrix _Y_ and a matrix _Nu_ of the same 
+#' dimension. _Nu_ values follow an _N_(_mu_, _sigma_^2) distribution. The _prop_% of 
+#' the elements of the array _Y_ are selected randomly. If Y_ij_ is selected 
+#' then it is replaced by _Y_ij_ + _Nu_ij_. This procedure is called additive 
 #' contamination of _prob_%.
-#' @param Y The time serie (as numeric) to be contaminated. 
+#' @param Y The time-series (as numeric) to be contaminated. 
 #' @param prob The probability of success of the binomial distribution. A number between 0 and 1.
-#' @param \mu The mean of the normal distribution.
-#' @param \sigma The standard deviation of the normal distribution. A real number.
+#' @param mu The mean of the normal distribution.
+#' @param sigma The standard deviation of the normal distribution. A real number.
 #' @export
-#' @return The y matrix with aditive noise.
+#' @return The y matrix with additive noise.
 AddGaussianNoise <- function(y, prob, mu, sigma) {
   n = length(y)
   ts.bin = rbinom(n, 1, prob)
