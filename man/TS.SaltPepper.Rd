@@ -4,16 +4,17 @@
 \alias{TS.SaltPepper}
 \title{Salt and pepper variation imposed}
 \usage{
-TS.SaltPepper(S, epsi)
+TS.SaltPepper(Y, prop)
 }
 \arguments{
-\item{S}{A time series with real values.}
+\item{Y}{A time series with real values.}
 
-\item{epsi}{contamination percentage for the salt and pepper noise [0,1].}
+\item{prop}{contamination percentage for the salt and pepper noise [0,1].}
 }
 \value{
-The input time series with the gaussian noise variation imposed.
+The input time series with the salt and pepper noise variation imposed.
 }
 \description{
-Similar to salt and pepper image noise but applying to time series. In this case, salt and pepper variations correspond to max(S) and and min(S) respectively.
+Similar to salt and pepper image noise but applying to time series. In this case, 
+salt and pepper variations correspond to max(Y) and min(Y) respectively.
 }

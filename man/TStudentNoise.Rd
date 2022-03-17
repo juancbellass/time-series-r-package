@@ -13,6 +13,9 @@ TStudentNoise(y, prob, dfr)
 
 \item{Y}{The time serie as *numeric* to be contaminated.}
 }
+\value{
+The Y matrix with t-Student noise.
+}
 \description{
 Bla bla bla
 }

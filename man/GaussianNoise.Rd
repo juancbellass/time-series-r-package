@@ -9,14 +9,14 @@ GaussianNoise(y, prob, mu, sigma)
 \arguments{
 \item{prob}{The probability of success of the binomial distribution. A number between 0 and 1.}
 
-\item{Y}{The time serie (as numeric) to be contaminated.}
+\item{Y}{The time-series (as numeric) to be contaminated.}
 
 \item{\mu}{The mean of the normal distribution.}
 
 \item{\sigma}{The standard deviation of the normal distribution. A real number.}
 }
 \value{
-The y matrix with aditive noise.
+The Y matrix with additive noise.
 }
 \description{
 Bla bla bla

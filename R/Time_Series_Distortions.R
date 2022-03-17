@@ -52,23 +52,23 @@ TimeShift <- function(S, beta=1) {
 
 #' Salt and pepper variation imposed
 #' 
-#' Similar to salt and pepper image noise but applying to time series. In this case, salt and pepper variations correspond to max(S) and and min(S) respectively.
-#' @param S A time series with real values.
-#' @param epsi contamination percentage for the salt and pepper noise [0,1]. 
-#' @return The input time series with the gaussian noise variation imposed.
+#' Similar to salt and pepper image noise but applying to time series. In this case, 
+#' salt and pepper variations correspond to max(Y) and min(Y) respectively.
+#' @param Y A time series with real values.
+#' @param prop contamination percentage for the salt and pepper noise [0,1]. 
+#' @return The input time series with the salt and pepper noise variation imposed.
 #' @export
-TS.SaltPepper <- function(S, epsi) {
-  if (epsi<0 | epsi>1) {stop('epsi must be in the interval [0,1]')}
-  n = length(S)
-  salt = max(S)
-  pepper = min(S)
-  random =sort(sample(1:n, (epsi*n),replace = F))
-  len.rand = length(random)
-  S1 = S
-  for (i in 1:len.rand) {
-    ifelse(i<=(len.rand), S1[i] <- salt, S1[i] <- pepper)
-  }
-  return(S1)
+TS.SaltPepper <- function(Y, prop) {
+  if (prop<0 | prop>1) {stop('epsi must be in the interval [0,1]')}
+  n = length(Y) 
+  salt = max(Y)
+  pepper = min(Y)
+  ts.bin = rbinom(n, 1, prop)
+  Y2 = (abs(ts.bin-1)*Y) # unaltered data from the original time-series
+  for (i in 1:n) {
+    if (ts.bin[i] == 1) {ifelse(rbinom(1,1,.5) == 0, 
+                                ts.bin[i] <- salt, ts.bin[i] <- pepper)}}
+  return(Y2 + ts.bin)
 }
 
 #' Additive Gaussian Noise
@@ -82,8 +82,8 @@ TS.SaltPepper <- function(S, epsi) {
 #' @param prob The probability of success of the binomial distribution. A number between 0 and 1.
 #' @param mu The mean of the normal distribution.
 #' @param sigma The standard deviation of the normal distribution. A real number.
-#' @export
 #' @return The y matrix with additive noise.
+#' @export
 AddGaussianNoise <- function(y, prob, mu, sigma) {
   n = length(y)
   ts.bin = rbinom(n, 1, prob)
@@ -94,12 +94,12 @@ AddGaussianNoise <- function(y, prob, mu, sigma) {
 #' Gaussian Noise
 #' 
 #' Bla bla bla
-#' @param Y The time serie (as numeric) to be contaminated. 
+#' @param Y The time-series (as numeric) to be contaminated. 
 #' @param prob The probability of success of the binomial distribution. A number between 0 and 1.
 #' @param \mu The mean of the normal distribution.
 #' @param \sigma The standard deviation of the normal distribution. A real number.
+#' @return The Y matrix with additive noise.
 #' @export
-#' @return The y matrix with aditive noise.
 GaussianNoise <- function(y, prob, mu, sigma) {
   n = length(y)
   ts.bin = rbinom(n, 1, prob)
@@ -113,6 +113,8 @@ GaussianNoise <- function(y, prob, mu, sigma) {
 #' @param Y The time serie as *numeric* to be contaminated.
 #' @param prob The probability of success of the binomial distribution. A number between 0 and 1.
 #' @param dfr The degrees of freedom of the t-student distribution.
+#' @return The Y matrix with t-Student noise.
+#' @export
 TStudentNoise <- function(y, prob, dfr) {
   n = length(y)
   ts.bin = rbinom(n, 1, prob)
@@ -129,7 +131,9 @@ TStudentNoise <- function(y, prob, dfr) {
 #' contaminación de reemplazo por otro proceso AR al prob,100%.
 #' @param y The time serie as *numeric* to be contaminated.
 #' @param prob The probability of success of the binomial distribution. A number between 0 and 1.
-#' @param 
+#' @param phi1
+#' @return The Y matrix with autoregressive process noise.
+#' @export
 ReplARCont <- function(y, prob, phi1) {
   N = length(y)
   ts.bin = rbinom(N, 1, prob)

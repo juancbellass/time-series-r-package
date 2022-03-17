@@ -11,6 +11,9 @@ ReplARCont(y, prob, phi1)
 
 \item{prob}{The probability of success of the binomial distribution. A number between 0 and 1.}
 }
+\value{
+The Y matrix with autoregressive process noise.
+}
 \description{
 Se genrea un vector llamado "ts.cont" a partir de un vector inicial "y", y otrvector 
 "ts.ar"de la misma dimensión. Los valores de "ts.ar"son generados con un proceso AR con parámetros φ. 
