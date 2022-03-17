@@ -7,11 +7,11 @@
 TStudentNoise(y, prob, dfr)
 }
 \arguments{
-\item{y}{The time serie as *numeric* to be contaminated.}
-
 \item{prob}{The probability of success of the binomial distribution. A number between 0 and 1.}
 
 \item{dfr}{The degrees of freedom of the t-student distribution.}
+
+\item{Y}{The time serie as *numeric* to be contaminated.}
 }
 \description{
 Bla bla bla
