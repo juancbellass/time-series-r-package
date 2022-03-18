@@ -85,7 +85,7 @@ TS.SaltPepper <- function(Y, prop) {
 #' @return The y matrix with additive noise.
 #' @export
 AddGaussianNoise <- function(y, prob, mu, sigma) {
-  if (prob<=0 | prob>=1) {stop('prob must be in the interval [0,1]')}
+  if (prob<0 | prob>1) {stop('prob must be in the interval [0,1]')}
   n = length(y)
   ts.bin = rbinom(n, 1, prob)
   ts.normal = rnorm(n, mean=mu, sd=sigma)
@@ -102,7 +102,7 @@ AddGaussianNoise <- function(y, prob, mu, sigma) {
 #' @return The Y matrix with additive noise.
 #' @export
 GaussianNoise <- function(y, prob, mu, sigma) {
-  if (prob<=0 | prob>=1) {stop('prob must be in the interval [0,1]')}
+  if (prob<0 | prob>1) {stop('prob must be in the interval [0,1]')}
   n = length(y)
   ts.bin = rbinom(n, 1, prob)
   ts.normal = rnorm(n, mean=mu, sd=sigma)
@@ -118,7 +118,7 @@ GaussianNoise <- function(y, prob, mu, sigma) {
 #' @return The Y matrix with t-Student noise.
 #' @export
 TStudentNoise <- function(y, prob, dfr) {
-  if (prob<=0 | prob>=1) {stop('prob must be in the interval [0,1]')}
+  if (prob<0 | prob>1) {stop('prob must be in the interval [0,1]')}
   n = length(y)
   ts.bin = rbinom(n, 1, prob)
   ts.tst = rt(n, df=dfr)
@@ -138,8 +138,8 @@ TStudentNoise <- function(y, prob, dfr) {
 #' @return The Y matrix with autoregressive process noise.
 #' @export
 ReplARCont <- function(y, prob, phi1) {
-  if (prob<=0 | prob>=1) {stop('prob must be in the interval [0,1]')}
-  if (phi1<0 | phi1>1) {stop('phi1 must be in the interval (0,1)')}
+  if (prob<0 | prob>1) {stop('prob must be in the interval [0,1]')}
+  if (phi1<=0 | phi1>=1) {stop('phi1 must be in the interval (0,1)')}
   N = length(y)
   ts.bin = rbinom(N, 1, prob)
   ar1.sim = arima.sim(model = list(ar = phi1), n = N)
