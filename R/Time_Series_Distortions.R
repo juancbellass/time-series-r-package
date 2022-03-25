@@ -56,13 +56,14 @@ TimeShift <- function(S, beta=1) {
 #' salt and pepper variations correspond to max(Y) and min(Y) respectively.
 #' @param Y A time series with real values.
 #' @param prop contamination percentage for the salt and pepper noise [0,1]. 
+#' @param beta the factor that multiplies the minimum and maximum of the series to determine the value of salt and pepper respectively
 #' @return The input time series with the salt and pepper noise variation imposed.
 #' @export
-TS.SaltPepper <- function(Y, prop) {
+TS.SaltPepper <- function(Y, prop, beta=1) {
   if (prop<0 | prop>1) {stop('epsi must be in the interval [0,1]')}
   n = length(Y) 
-  salt = max(Y)
-  pepper = min(Y)
+  salt = beta * max(Y)
+  pepper = beta * min(Y)
   ts.bin = rbinom(n, 1, prop)
   Y2 = (abs(ts.bin-1)*Y) # unaltered data from the original time-series
   for (i in 1:n) {

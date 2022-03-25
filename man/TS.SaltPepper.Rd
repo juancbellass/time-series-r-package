@@ -4,12 +4,14 @@
 \alias{TS.SaltPepper}
 \title{Salt and pepper variation imposed}
 \usage{
-TS.SaltPepper(Y, prop)
+TS.SaltPepper(Y, prop, beta = 1)
 }
 \arguments{
 \item{Y}{A time series with real values.}
 
 \item{prop}{contamination percentage for the salt and pepper noise [0,1].}
+
+\item{beta}{the factor that multiplies the minimum and maximum of the series to determine the value of salt and pepper respectively}
 }
 \value{
 The input time series with the salt and pepper noise variation imposed.
