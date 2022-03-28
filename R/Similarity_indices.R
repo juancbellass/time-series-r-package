@@ -119,3 +119,30 @@ CHOU <- function(x, y, FUN, k=3.1){
 CHOU.NA.OMIT <- function(x,y, K=3.1){
   return(CHOU(as.numeric(na.omit(x)),as.numeric(na.omit(y)),k=K)[1])
 }
+
+#' TEMPORAL CORRELATION
+#' 
+#' Compute the Temporal Correlation of Chouakria and Nagabhushan between two same length time series S1 and S2.
+#' @param S1 a time series of length n with real values.
+#' @param S2 a time series of length n with real values.
+#' @param k a equal to 3.1 by default.
+#' @return CORT temporal correlation between S1 and S2. 
+#' @references  for more details read  Chouakria Douzal 2003.
+#' @export
+CORT <- function(x, y){
+  S1 = as.numeric(x)
+  S2 = as.numeric(y)
+  p = length(S1)
+  suma = 0 #inicializamos la suma para la distancia euclidea
+  suma1 = 0 #inicializamos la sumatoria S1 del denominador para el CORT
+  suma2 = 0 #inicializamos la sumatoria S2 del denominador para el CORT
+  numerador = 0 #inicializamos la sumatoria del numerador para el CORT
+  for (i in 1:p) {
+    if (i < p) {
+      numerador = numerador + ((S1[i+1] - S1[i]) * (S2[i+1] - S2[i])) #calculamos la sumatoria del numerador del CORT
+      suma1 = suma1 + (S1[i+1] - S1[i])^2 #calculamos las dos sumatorias del denominador del CORT
+      suma2 = suma2 + (S2[i+1] - S2[i])^2
+    }
+  }
+  return(numerador / (sqrt(suma1) * sqrt(suma2)))
+}
