@@ -41,14 +41,14 @@ SSIMT <- function(x, y, FUN=mean, ...){
   C3 = 2592e-6 # =c2/2
   muX = FUN(X, ...) 
   muY = FUN(Y, ...)
-  vX = sd(X)
-  vY = sd(Y)
-  vXY = cov(X, Y)
-  
+  sdX = sqrt(sum((X - muX)^2) / (length(X) - 1))
+  sdX = sqrt(sum((Y - muY)^2) / (length(Y) - 1))
+  vXY = sum((X - muX)*(Y - muY)) / (length(Y)-1)
+
   #relacion de luminancia
-  l.xy = ((2 * abs(muX) * abs(muY)) + C1 ) / (muX^2 + muY^2 + C1)
+  l.xy = ((2 * muX * muY) + C1 ) / (muX^2 + muY^2 + C1)
   #relacion de contraste
-  c.xy = ((2 * vX * vY) + C2 ) / (vX^2 + vY^2 + C2)
+  c.xy = ((2 * sdX * sdY) + C2 ) / (sdX^2 + sdY^2 + C2)
   #correlacion
   s.xy = (vXY + C3) / ((vX * vY) + C3)
   #calculamos la SSIM
