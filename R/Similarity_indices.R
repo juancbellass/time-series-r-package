@@ -50,7 +50,7 @@ SSIMT <- function(x, y, FUN=mean, ...){
   #relacion de contraste
   c.xy = ((2 * sdX * sdY) + C2 ) / (sdX^2 + sdY^2 + C2)
   #correlacion
-  s.xy = (vXY + C3) / ((vX * vY) + C3)
+  s.xy = (vXY + C3) / ((sdX * sdY) + C3)
   #calculamos la SSIM
   z = l.xy * c.xy * s.xy #asumimos los pesos a, b, c todos iguales a 1
   return(z)
