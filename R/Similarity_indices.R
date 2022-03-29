@@ -42,7 +42,7 @@ SSIMT <- function(x, y, FUN=mean, ...){
   muX = FUN(X, ...) 
   muY = FUN(Y, ...)
   sdX = sqrt(sum((X - muX)^2) / (length(X) - 1))
-  sdX = sqrt(sum((Y - muY)^2) / (length(Y) - 1))
+  sdY = sqrt(sum((Y - muY)^2) / (length(Y) - 1))
   vXY = sum((X - muX)*(Y - muY)) / (length(Y)-1)
 
   #relacion de luminancia
