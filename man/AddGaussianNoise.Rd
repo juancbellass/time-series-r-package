@@ -19,9 +19,9 @@ AddGaussianNoise(y, prob, mu, sigma)
 The y matrix with additive noise.
 }
 \description{
-Generates a matrix _C_ from an initial matrix _Y_ and a matrix _Nu_ of the same 
-dimension. _Nu_ values follow an _N_(_mu_, _sigma_^2) distribution. The _prop_% of 
-the elements of the array _Y_ are selected randomly. If Y_ij_ is selected 
-then it is replaced by _Y_ij_ + _Nu_ij_. This procedure is called additive 
-contamination of _prob_%.
+Generates a vector _ts.normal_ is created where every element of _ts.normal_ follow a 
+N(mu, sigma2) distribution. The _prop_% of the elements of the array _Y_ are 
+selected randomly. The _prop_% of the elements of the array _Y_ are selected 
+randomly. If Y_i_ is selected  then it is replaced by _Y_i_ + _ts.normal_i_. 
+This procedure is called additive contamination of _prob_%.
 }

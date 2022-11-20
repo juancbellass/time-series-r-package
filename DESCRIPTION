@@ -8,4 +8,4 @@ Encoding: UTF-8
 Imports: 
 	dtw,
 	philentropy,
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.2

@@ -17,5 +17,7 @@ TStudentNoise(y, prob, dfr)
 The Y matrix with t-Student noise.
 }
 \description{
-Bla bla bla
+A vector ts.student is created where every element of _ts.student_ follow a 
+t(df) distribution. The _prop_% of the elements of the array _Y_ are 
+selected randomly. If Y_i_ is selected then it is replaced by _Y_i_ + _ts.student_i_.
 }

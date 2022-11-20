@@ -74,11 +74,11 @@ TS.SaltPepper <- function(Y, prop, beta=1) {
 
 #' Additive Gaussian Noise
 #' 
-#' Generates a matrix _C_ from an initial matrix _Y_ and a matrix _Nu_ of the same 
-#' dimension. _Nu_ values follow an _N_(_mu_, _sigma_^2) distribution. The _prop_% of 
-#' the elements of the array _Y_ are selected randomly. If Y_ij_ is selected 
-#' then it is replaced by _Y_ij_ + _Nu_ij_. This procedure is called additive 
-#' contamination of _prob_%.
+#' Generates a vector _ts.normal_ is created where every element of _ts.normal_ follow a 
+#' N(mu, sigma2) distribution. The _prop_% of the elements of the array _Y_ are 
+#' selected randomly. The _prop_% of the elements of the array _Y_ are selected 
+#' randomly. If Y_i_ is selected  then it is replaced by _Y_i_ + _ts.normal_i_. 
+#' This procedure is called additive contamination of _prob_%.
 #' @param Y The time-series (as numeric) to be contaminated. 
 #' @param prob The probability of success of the binomial distribution. A number between 0 and 1.
 #' @param mu The mean of the normal distribution.
@@ -93,26 +93,11 @@ AddGaussianNoise <- function(y, prob, mu, sigma) {
   return(y + (ts.bin * ts.normal)) 
 }
 
-#' Gaussian Noise
-#' 
-#' Bla bla bla
-#' @param Y The time-series (as numeric) to be contaminated. 
-#' @param prob The probability of success of the binomial distribution. A number between 0 and 1.
-#' @param \mu The mean of the normal distribution.
-#' @param \sigma The standard deviation of the normal distribution. A real number.
-#' @return The Y matrix with additive noise.
-#' @export
-GaussianNoise <- function(y, prob, mu, sigma) {
-  if (prob<0 | prob>1) {stop('prob must be in the interval [0,1]')}
-  n = length(y)
-  ts.bin = rbinom(n, 1, prob)
-  ts.normal = rnorm(n, mean=mu, sd=sigma)
-  return((abs(ts.bin-1)*y) + (ts.bin*ts.normal))
-}
-
 #' t-Student Noise
 #' 
-#' Bla bla bla
+#' A vector ts.student is created where every element of _ts.student_ follow a 
+#' t(df) distribution. The _prop_% of the elements of the array _Y_ are 
+#' selected randomly. If Y_i_ is selected then it is replaced by _Y_i_ + _ts.student_i_.
 #' @param Y The time serie as *numeric* to be contaminated.
 #' @param prob The probability of success of the binomial distribution. A number between 0 and 1.
 #' @param dfr The degrees of freedom of the t-student distribution.
@@ -123,7 +108,7 @@ TStudentNoise <- function(y, prob, dfr) {
   n = length(y)
   ts.bin = rbinom(n, 1, prob)
   ts.tst = rt(n, df=dfr)
-  return((abs(ts.bin-1)*y) + (ts.bin*ts.tst))
+  return(y + (ts.bin * ts.tst))
 }
 
 #' Contaminación por otro proceso autorregresivo.
@@ -135,7 +120,7 @@ TStudentNoise <- function(y, prob, dfr) {
 #' contaminación de reemplazo por otro proceso AR al prob,100%.
 #' @param y The time serie as *numeric* to be contaminated.
 #' @param prob The probability of success of the binomial distribution. A number between 0 and 1.
-#' @param phi1
+#' @param phi1 The parameter model. A number in the interval (0,1).
 #' @return The Y matrix with autoregressive process noise.
 #' @export
 ReplARCont <- function(y, prob, phi1) {
@@ -146,5 +131,3 @@ ReplARCont <- function(y, prob, phi1) {
   ar1.sim = arima.sim(model = list(ar = phi1), n = N)
   return((abs(ts.bin-1)*y) + (ts.bin*ar1.sim))
 }
-
-

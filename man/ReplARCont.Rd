@@ -10,6 +10,8 @@ ReplARCont(y, prob, phi1)
 \item{y}{The time serie as *numeric* to be contaminated.}
 
 \item{prob}{The probability of success of the binomial distribution. A number between 0 and 1.}
+
+\item{phi1}{The parameter model. A number in the interval (0,1).}
 }
 \value{
 The Y matrix with autoregressive process noise.
