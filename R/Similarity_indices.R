@@ -1,30 +1,29 @@
-#' EUCLIDEAN DISTANCE WITH NA.OMIT 
+#' FRECHET DISTANCE 
 #' 
-#' Compute point-to-point euclidean distance between two time series x and y.
-#' @param x a time series with real values.
-#' @param y a time series with real values and not necessarily the same length as x.
-#' @return a positive real number result of the sum of point-to-point euclidean distance between x and y.
-#' @import philentropy
+#' Computes the Frechet distance between two numerical trajectories.
+#' @param s1 a numeric vector containing the first time series.
+#' @param s2 a numeric vector containing the second time series.
+#' @return a positive real number resulting from the the calculated distance between the pair of series.
+#' @import SimilarityMeasures
 #' @export
-EUC.NA.OMIT <- function(x,y){
-  return(euclidean(as.numeric(na.omit(x)),as.numeric(na.omit(y)),testNA = FALSE))
+Frechets.Measure <- function(s1, s2){
+  return(Frechet(t(as.matrix(s1)), t(as.matrix(s2))))
 }
 
-#' DYNAMIC TIME WARPING WITH NA.OMIT 
+#' PEARSON MEASURE 
 #' 
-#' Compute dynamic time warping distance between two time series x and y using the "dtw" library.
-#' @param x a time series with real values.
-#' @param y a time series with real values and not necessarily the same length as x.
-#' @return a positive real number result of dynamic time warping distance between x and y using dtw(x,y)$distance function.
-#' @import dtw
+#' Computes the Pearson correlation between two numerical vectors and return the result of 1-abs(Person).
+#' @param s1 a numeric vector containing the first time series.
+#' @param s2 a numeric vector containing the second time series.
+#' @return a positive real number between 0 and 1. Where 0 is the maximum similarity and 1 the maximum dissimilarity.
+#' @import stats
 #' @export
-DTW.NA.OMIT <- function (x,y){
-  return(dtw(as.numeric(na.omit(x)),as.numeric(na.omit(y)))$distance)
-}
+Pearsons.Measure <- function(s1, s2){return(1-abs(cor(s1, s2)))}
+
 
 #' SSIMT INDEX
 #' 
-#' Compute SSIMT similarity index between two same length time series X and Y.
+#' Computes SSIMT similarity index between two same length time series X and Y.
 #' @param X a time series of length n with real values.
 #' @param Y a time series of length n with real values.
 #' @param FUN mean by default.
@@ -56,93 +55,51 @@ SSIMT <- function(x, y, FUN=mean, ...){
   return(z)
 }
 
-#' SSIMT INDEX WITH NA.OMIT
-#' 
-#' Compute SSIMT similarity index between two same length time series X and Y.
-#' @param X a time series of length n with real values.
-#' @param Y a time series of length n with real values.
-#' @return a real number between 1 and -1; where 1 means max similarity, -1 means opposite behavior and 0 no similarity. 
-#' @export
-SSIMT.NA.OMIT <- function(x,y){
-  return(SSIMT(as.numeric(na.omit(x)),as.numeric(na.omit(y))))
-}
-
-#' CHOUAKRIA INDEX
-#' 
-#' Compute D index of Chouakria and Nagabhushan similarity index between two same length time series S1 and S2.
-#' @param S1 a time series of length n with real values.
-#' @param S2 a time series of length n with real values.
-#' @param k a equal to 3.1 by default.
-#' @return D a positive real number plus 0; where 0 means max similarity.
-#' @return CORT temporal correlation between S1 and S2. 
-#' @return dE point-to-point euclidean distance between S1 and S2.
-#' @references  for more details read Chouakria and Nagabhushan 2007.
-#' @export
-CHOU <- function(x, y, FUN, k=3.1){
-  S1 = as.numeric(x)
-  S2 = as.numeric(y)
-  p = length(S1)
-  suma = 0 #inicializamos la suma para la distancia euclidea
-  suma1 = 0 #inicializamos la sumatoria S1 del denominador para el CORT
-  suma2 = 0 #inicializamos la sumatoria S2 del denominador para el CORT
-  numerador = 0 #inicializamos la sumatoria del numerador para el CORT
-  for (i in 1:p) {
-    if (i < p) {
-      numerador = numerador + ((S1[i+1] - S1[i]) * (S2[i+1] - S2[i])) #calculamos la sumatoria del numerador del CORT
-      suma1 = suma1 + (S1[i+1] - S1[i])^2 #calculamos las dos sumatorias del denominador del CORT
-      suma2 = suma2 + (S2[i+1] - S2[i])^2
-    }
-  }
-  if (missing(FUN)) {
-    dE = euclidean(S1,S2,testNA = FALSE)
-  } else {
-    dE = FUN(S1,S2)
-  }
-  CORT = numerador / (sqrt(suma1) * sqrt(suma2))
-  #finalmente calculamos la dissimilaridad
-  D = (2 / (1 + exp(k * CORT))) * dE
-  y = as.numeric(D)
-  return(y)
-}
-
-#' CHOUAKRIA INDEX WITH NA.OMIT
-#' 
-#' Compute D index of Chouakria and Nagabhushan similarity index between two same length time series S1 and S2.
-#' @param S1 a time series of length n with real values.
-#' @param S2 a time series of length n with real values.
-#' @param k a equal to 3.1 by default.
-#' @return D a positive real number plus 0; where 0 means max similarity.
-#' @return CORT temporal correlation between S1 and S2. 
-#' @return dE point-to-point euclidean distance between S1 and S2.
-#' @references  for more details read Chouakria and Nagabhushan 2007.
-#' @export
-CHOU.NA.OMIT <- function(x,y, K=3.1){
-  return(CHOU(as.numeric(na.omit(x)),as.numeric(na.omit(y)),k=K)[1])
-}
-
 #' TEMPORAL CORRELATION
 #' 
-#' Compute the Temporal Correlation of Chouakria and Nagabhushan between two same length time series S1 and S2.
-#' @param S1 a time series of length n with real values.
-#' @param S2 a time series of length n with real values.
+#' Computes the Temporal Correlation of Chouakria and Nagabhushan between two same length time series S1 and S2.
+#' @param s1 a numeric vector containing the first time series.
+#' @param s2 a numeric vector containing the second time series.
 #' @param k a equal to 3.1 by default.
 #' @return CORT temporal correlation between S1 and S2. 
 #' @references  for more details read  Chouakria Douzal 2003.
 #' @export
-CORT <- function(x, y){
-  S1 = as.numeric(x)
-  S2 = as.numeric(y)
-  p = length(S1)
-  suma = 0 #inicializamos la suma para la distancia euclidea
-  suma1 = 0 #inicializamos la sumatoria S1 del denominador para el CORT
-  suma2 = 0 #inicializamos la sumatoria S2 del denominador para el CORT
-  numerador = 0 #inicializamos la sumatoria del numerador para el CORT
+CORT <- function(s1, s2){
+  p = length(s1)
+  suma = 0 #we initialize the sum for the euclidean distance
+  suma1 = 0 #we initialize the s1 sum for the denominator for the CORT
+  suma2 = 0 #we initialize the s2 sum for the denominator for the CORT
+  numerador = 0 #we initialize the numerator sum for the CORT
   for (i in 1:p) {
     if (i < p) {
-      numerador = numerador + ((S1[i+1] - S1[i]) * (S2[i+1] - S2[i])) #calculamos la sumatoria del numerador del CORT
-      suma1 = suma1 + (S1[i+1] - S1[i])^2 #calculamos las dos sumatorias del denominador del CORT
+      numerador = numerador + ((S1[i+1] - S1[i]) * (S2[i+1] - S2[i])) #calculate the CORT numerator sum
+      suma1 = suma1 + (S1[i+1] - S1[i])^2 #calculate both CORT denomiator sums
       suma2 = suma2 + (S2[i+1] - S2[i])^2
     }
   }
   return(numerador / (sqrt(suma1) * sqrt(suma2)))
 }
+
+#' TEMPORAL CORRELATION MEASURE
+#' 
+#' Computes the Temporal Correlation of Chouakria and Nagabhushan between two same length time series s1 and s2, and return the result of 1-abs(CORT).
+#' @param s1 a numeric vector containing the first time series.
+#' @param s2 a numeric vector containing the second time series.
+#' @param k a equal to 3.1 by default.
+#' @return a positive real number between 0 and 1. Where 0 is the maximum similarity and 1 the maximum dissimilarity.
+#' @references  for more details read  Chouakria Douzal 2003.
+#' @export
+CORT.Measure <- function(s1, s2){1-abs(CORT(s1, s2))}
+
+
+#' LONGEST COMMON SUBSEQUENCE DISTANCE MEASURE
+#' 
+#' Computes the Longest Common Sub sequence distance between a pair of numeric time series, and return difference between the length of s1 and the LCSS distance.
+#' @param s1 a numeric vector containing the first time series.
+#' @param s2 a numeric vector containing the second time series.
+#' @param e  a positive threshold value that defines the distance.
+#' @return a positive real number between 0 and 1. Where 0 is the maximum similarity and 1 the maximum dissimilarity.
+#' @references  for more details read  TSdist documentation
+#' @import TSdist
+#' @export
+LCSS.Measure <- function(s1, s2, e=0.01){length(s1) - LCSSDistance(s1, s2, e)}
