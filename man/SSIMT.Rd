@@ -19,5 +19,5 @@ SSIMT(x, y, FUN = mean, ...)
 a real number between 1 and -1; where 1 means max similarity, -1 means opposite behavior and 0 no similarity.
 }
 \description{
-Compute SSIMT similarity index between two same length time series X and Y.
+Computes SSIMT similarity index between two same length time series X and Y.
 }
