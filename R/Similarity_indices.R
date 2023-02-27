@@ -94,12 +94,71 @@ CORT.Measure <- function(s1, s2){1-abs(CORT(s1, s2))}
 
 #' LONGEST COMMON SUBSEQUENCE DISTANCE MEASURE
 #' 
-#' Computes the Longest Common Sub sequence distance between a pair of numeric time series, and return difference between the length of s1 and the LCSS distance.
+#' Computes the 'Longest Common Sub sequence distance' between a pair of numeric time series, and return difference between the length of s1 and the LCSS distance.
 #' @param s1 a numeric vector containing the first time series.
 #' @param s2 a numeric vector containing the second time series.
 #' @param e  a positive threshold value that defines the distance.
 #' @return a positive real number between 0 and 1. Where 0 is the maximum similarity and 1 the maximum dissimilarity.
-#' @references  for more details read  TSdist documentation
+#' @references  for more details read the ''TSdist' package documentation
 #' @import TSdist
 #' @export
 LCSS.Measure <- function(s1, s2, e=0.01){length(s1) - LCSSDistance(s1, s2, e)}
+
+
+#' CHEBYSHEV MEASURE
+#' 
+#' Computes the Chebyshev distance using the 'chebyshev' function from the 'philentropy' package by setting the testNA parameter as False.
+#' @param s1 a numeric vector containing the first time series.
+#' @param s2 a numeric vector containing the second time series.
+#' @return a positive real number. The computed distance between the pair of series.
+#' @references for more details read the 'philentropy' package documentation.
+#' @import philentropy
+#' @export
+Chebyshev.Measure <- function(s1, s2) {return(chebyshev(s1, s2, testNA = F))} 
+
+
+#' EDITH DISTANCE WITH REAL PENALTY 
+#' Computes the Edit Distance with Real Penalty between a pair of numeric time series using the 'ERPDistance' function from the 'TSdist' package.
+#' We by setting the 'sigma' parameter as the 10% of the time series length, and the 'g' parameter equal to 0.1.
+#' @param s1 a numeric vector containing the first time series.
+#' @param s2 a numeric vector containing the second time series.
+#' @param g the reference value used to penalize gaps.
+#' @param sima a Sakoe-Chiba windowing constraint can be added by specifying a positive integer representing the window size.
+#' @return the computed distance between the pair of series.
+#' @references for more details read the 'TSdist' package documentation. 
+#' @import TSdist
+#' @export
+ERP.Measure <- function(s1, s2) {
+  win <- ceiling(length(s1)/.1)
+  return(ERPDistance(s1, s2, g=.1, sigma=win))}
+
+
+#' EDITH DISTANCE FOR REAL SEQUENCE
+#' Computes the Edit Distance for Real Sequence between a pair of numeric time series using the 'EDRDistance' function from the 'TSdist' package.
+#' We by setting the 'sigma' parameter as the 10% of the time series length, and the 'epsilon' parameter equal to 0.1.
+#' @param s1 a numeric vector containing the first time series.
+#' @param s2 a numeric vector containing the second time series.
+#' @param epsilon a positive threshold value that defines the distance.
+#' @param sima a Sakoe-Chiba windowing constraint can be added by specifying a positive integer representing the window size.
+#' @return the computed distance between the pair of series.
+#' @references for more details read the 'TSdist' package documentation. 
+#' @import TSdist
+#' @export
+EDR.Measure <- function(s1, s2) {
+  win <- ceiling(length(s1)/.1)
+  return(EDRDistance(s1, s2, epsilon=.1, sigma=win))}
+
+
+#' DYNAMIC TIME WARPING
+#' Computes the Dynamic Time Warping distance between a pair of numeric time series using the 'DTWDistance' function from the 'TSdist' package.
+#' We by setting the 'DTWDistance' function by using a  Sakoe-Chiba windowing constraint with a window equal to the 10% of the time series length.
+#' @param s1 a numeric vector containing the first time series.
+#' @param s2 a numeric vector containing the second time series.
+#' @return the computed distance between the pair of series.
+#' @references for more details read the 'TSdist' package documentation. 
+#' @import TSdist
+#' @export 
+DTW.Measure <- function(s1, s2){
+  win <- ceiling(length(s1)/.1)
+  return(DTWDistance(s1, s2, window.type="sakoechiba", window.size=win))
+}
