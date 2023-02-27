@@ -17,8 +17,8 @@ LCSS.Measure(s1, s2, e = 0.01)
 a positive real number between 0 and 1. Where 0 is the maximum similarity and 1 the maximum dissimilarity.
 }
 \description{
-Computes the Longest Common Sub sequence distance between a pair of numeric time series, and return difference between the length of s1 and the LCSS distance.
+Computes the 'Longest Common Sub sequence distance' between a pair of numeric time series, and return difference between the length of s1 and the LCSS distance.
 }
 \references{
-for more details read  TSdist documentation
+for more details read the ''TSdist' package documentation
 }
