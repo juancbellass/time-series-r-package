@@ -72,9 +72,9 @@ CORT <- function(s1, s2){
   numerador = 0 #we initialize the numerator sum for the CORT
   for (i in 1:p) {
     if (i < p) {
-      numerador = numerador + ((S1[i+1] - S1[i]) * (S2[i+1] - S2[i])) #calculate the CORT numerator sum
-      suma1 = suma1 + (S1[i+1] - S1[i])^2 #calculate both CORT denomiator sums
-      suma2 = suma2 + (S2[i+1] - S2[i])^2
+      numerador = numerador + ((s1[i+1] - s1[i]) * (s2[i+1] - s2[i])) #calculate the CORT numerator sum
+      suma1 = suma1 + (s1[i+1] - s1[i])^2 #calculate both CORT denomiator sums
+      suma2 = suma2 + (s2[i+1] - s2[i])^2
     }
   }
   return(numerador / (sqrt(suma1) * sqrt(suma2)))
