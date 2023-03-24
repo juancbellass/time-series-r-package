@@ -72,7 +72,7 @@ TS.SaltPepper <- function(Y, prop, beta=1) {
   return(Y2 + ts.bin)
 }
 
-#' Additive Gaussian Noise
+#' Gaussian Noise
 #' 
 #' Generates a vector _ts.normal_ is created where every element of _ts.normal_ follow a 
 #' N(mu, sigma2) distribution. The _prop_% of the elements of the array _Y_ are 
@@ -85,7 +85,7 @@ TS.SaltPepper <- function(Y, prop, beta=1) {
 #' @param sigma The standard deviation of the normal distribution. A real number.
 #' @return The y matrix with additive noise.
 #' @export
-AddGaussianNoise <- function(y, prob, mu, sigma) {
+GaussianNoise <- function(y, prob, mu, sigma) {
   if (prob<0 | prob>1) {stop('prob must be in the interval [0,1]')}
   n = length(y)
   ts.bin = rbinom(n, 1, prob)
@@ -113,7 +113,7 @@ TStudentNoise <- function(y, prob, dfr) {
 
 #' Contaminación por otro proceso autorregresivo.
 #' 
-#' Se genrea un vector llamado "ts.cont" a partir de un vector inicial "y", y otrvector 
+#' Se genera un vector llamado "ts.cont" a partir de un vector inicial "y", y otrvector 
 #' "ts.ar"de la misma dimensión. Los valores de "ts.ar"son generados con un proceso AR con parámetros φ. 
 #' El prob,100% de los valores de "y"son elegidos al azar. Si y_i es seleccionado, entonces 
 #' es reemplazado por la entrada i del vector "ts.ar". Este procedimiento es llamado 

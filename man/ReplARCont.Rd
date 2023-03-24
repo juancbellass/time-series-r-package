@@ -17,7 +17,7 @@ ReplARCont(y, prob, phi1)
 The Y matrix with autoregressive process noise.
 }
 \description{
-Se genrea un vector llamado "ts.cont" a partir de un vector inicial "y", y otrvector 
+Se genera un vector llamado "ts.cont" a partir de un vector inicial "y", y otrvector 
 "ts.ar"de la misma dimensión. Los valores de "ts.ar"son generados con un proceso AR con parámetros φ. 
 El prob,100% de los valores de "y"son elegidos al azar. Si y_i es seleccionado, entonces 
 es reemplazado por la entrada i del vector "ts.ar". Este procedimiento es llamado 
