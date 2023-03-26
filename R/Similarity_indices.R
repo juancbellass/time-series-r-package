@@ -64,19 +64,10 @@ SSIMT <- function(x, y, FUN=mean, ...){
 #' @return CORT temporal correlation between S1 and S2. 
 #' @references  for more details read  Chouakria Douzal 2003.
 #' @export
-CORT <- function(s1, s2){
-  p = length(s1)
-  suma = 0 #we initialize the sum for the euclidean distance
-  suma1 = 0 #we initialize the s1 sum for the denominator for the CORT
-  suma2 = 0 #we initialize the s2 sum for the denominator for the CORT
-  numerador = 0 #we initialize the numerator sum for the CORT
-  for (i in 1:p) {
-    if (i < p) {
-      numerador = numerador + ((s1[i+1] - s1[i]) * (s2[i+1] - s2[i])) #calculate the CORT numerator sum
-      suma1 = suma1 + (s1[i+1] - s1[i])^2 #calculate both CORT denomiator sums
-      suma2 = suma2 + (s2[i+1] - s2[i])^2
-    }
-  }
+CORT <- function(s1, s2) {
+  numerador <- sum(diff(s1) * diff(s2)) # calculate the CORT numerator sum
+  suma1 <- sum(diff(s1) ^ 2) # calculate both CORT denominator sums
+  suma2 <- sum(diff(s2) ^ 2)
   return(numerador / (sqrt(suma1) * sqrt(suma2)))
 }
 

@@ -60,16 +60,14 @@ TimeShift <- function(S, beta=1) {
 #' @return The input time series with the salt and pepper noise variation imposed.
 #' @export
 TS.SaltPepper <- function(Y, prop, beta=1) {
-  if (prop<0 | prop>1) {stop('epsi must be in the interval [0,1]')}
+  if (prop<0 | prop>1) stop('epsi must be in the interval [0,1]')
   n = length(Y) 
   salt = beta * max(Y)
   pepper = beta * min(Y)
   ts.bin = rbinom(n, 1, prop)
-  Y2 = (abs(ts.bin-1)*Y) # unaltered data from the original time-series
-  for (i in 1:n) {
-    if (ts.bin[i] == 1) {ifelse(rbinom(1,1,.5) == 0, 
-                                ts.bin[i] <- salt, ts.bin[i] <- pepper)}}
-  return(Y2 + ts.bin)
+  salt_pepper = rbinom(n, 1, 0.5) * (salt - pepper) + pepper
+  Y2 = (1 - ts.bin) * Y # unaltered data from the original time-series
+  return(Y2 + ts.bin * salt_pepper)
 }
 
 #' Gaussian Noise
@@ -86,11 +84,11 @@ TS.SaltPepper <- function(Y, prop, beta=1) {
 #' @return The y matrix with additive noise.
 #' @export
 GaussianNoise <- function(y, prob, mu, sigma) {
-  if (prob<0 | prob>1) {stop('prob must be in the interval [0,1]')}
-  n = length(y)
-  ts.bin = rbinom(n, 1, prob)
-  ts.normal = rnorm(n, mean=mu, sd=sigma)
-  return(y + (ts.bin * ts.normal)) 
+  if (prob < 0 || prob > 1) stop('prob must be in the interval [0,1]')
+  ts.bin <- rbinom(length(y), 1, prob)
+  ts.normal <- rnorm(sum(ts.bin), mean = mu, sd = sigma)
+  y[ts.bin == 1] <- y[ts.bin == 1] + ts.normal
+  return(y)
 }
 
 #' t-Student Noise
@@ -104,11 +102,11 @@ GaussianNoise <- function(y, prob, mu, sigma) {
 #' @return The Y matrix with t-Student noise.
 #' @export
 TStudentNoise <- function(y, prob, dfr) {
-  if (prob<0 | prob>1) {stop('prob must be in the interval [0,1]')}
-  n = length(y)
-  ts.bin = rbinom(n, 1, prob)
-  ts.tst = rt(n, df=dfr)
-  return(y + (ts.bin * ts.tst))
+  if (prob < 0 || prob > 1) stop('prob must be in the interval [0,1]')
+  ts.bin <- rbinom(length(y), 1, prob)
+  ts.tst <- rt(sum(ts.bin), df = dfr)
+  y[ts.bin == 1] <- y[ts.bin == 1] + ts.tst
+  return(y)
 }
 
 #' Contaminación por otro proceso autorregresivo.
@@ -123,11 +121,11 @@ TStudentNoise <- function(y, prob, dfr) {
 #' @param phi1 The parameter model. A number in the interval (0,1).
 #' @return The Y matrix with autoregressive process noise.
 #' @export
-ReplARCont <- function(y, prob, phi1) {
-  if (prob<0 | prob>1) {stop('prob must be in the interval [0,1]')}
-  if (phi1<=0 | phi1>=1) {stop('phi1 must be in the interval (0,1)')}
-  N = length(y)
-  ts.bin = rbinom(N, 1, prob)
-  ar1.sim = arima.sim(model = list(ar = phi1), n = N)
-  return((abs(ts.bin-1)*y) + (ts.bin*ar1.sim))
+ReplARCont <- function(y, prob=1, phi1) {
+  if (prob < 0 || prob > 1) stop('prob must be in the interval [0,1]')
+  if (phi1 <= 0 || phi1 >= 1) stop('phi1 must be in the interval (0,1)')
+  ts.bin <- rbinom(length(y), 1, prob)
+  ar1.sim <- arima.sim(model=list(ar=phi1), n=sum(ts.bin))
+  y2 <- y * (1 - ts.bin)
+  return(y2 + ar1.sim * ts.bin)
 }

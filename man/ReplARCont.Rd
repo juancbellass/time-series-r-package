@@ -4,7 +4,7 @@
 \alias{ReplARCont}
 \title{Contaminación por otro proceso autorregresivo.}
 \usage{
-ReplARCont(y, prob, phi1)
+ReplARCont(y, prob = 1, phi1)
 }
 \arguments{
 \item{y}{The time serie as *numeric* to be contaminated.}
