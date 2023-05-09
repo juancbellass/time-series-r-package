@@ -153,3 +153,31 @@ DTW.Measure <- function(s1, s2){
   win <- ceiling(length(s1)/.1)
   return(DTWDistance(s1, s2, window.type="sakoechiba", window.size=win))
 }
+
+
+#' DYNAMIC TIME WARPING MSE
+#' Computes the Dynamic Time Warping mapped path between a pair of numeric time series using the 'dtw' function from the 'dtw' package.
+#' and calculate the MSE of the mapped path.
+#' We by setting the 'dtw' function by using a  Sakoe-Chiba windowing constraint with a window equal to the 10% of the time series length.
+#' @param s1 a numeric vector containing the first time series.
+#' @param s2 a numeric vector containing the second time series.
+#' @return the computed distance between the pair of series.
+#' @references for more details read the 'dtw' package documentation. 
+#' @import dtw
+#' @export 
+dtw_mse <- function(S1, S2){
+  path <- dtw(S1,S2)
+  sim <- 0
+  for (k in 1:length(path$index2)) {
+    i <- path$index1[k]
+    j <- path$index2[k]
+    if (k!=1 && 
+        i!=path$index1[k-1] && 
+        j!=path$index2[k-1]) {
+      sim <- sim + 2*abs(S1[i]-S2[j])
+    }else{
+      sim <- sim + sqrt((S1[i]-(S2[j]))^2)
+    }
+  }
+  return(sim/length(path$index1))
+}
