@@ -166,7 +166,8 @@ DTW.Measure <- function(s1, s2){
 #' @import dtw
 #' @export 
 dtw_mse <- function(S1, S2){
-  path <- dtw(S1,S2)
+  win <- ceiling(length(s1)/.1)
+  path <- dtw(S1,S2, window.type="sakoechiba", window.size=win)
   sim <- 0
   for (k in 1:length(path$index2)) {
     i <- path$index1[k]
@@ -176,7 +177,7 @@ dtw_mse <- function(S1, S2){
         j!=path$index2[k-1]) {
       sim <- sim + 2*abs(S1[i]-S2[j])
     }else{
-      sim <- sim + sqrt((S1[i]-(S2[j]))^2)
+      sim <- sim + abs(S1[i]-S2[j])
     }
   }
   return(sim/length(path$index1))
