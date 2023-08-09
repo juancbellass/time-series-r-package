@@ -6,12 +6,15 @@
 #' @param FUN distance measure.
 #' @param p some extra parameter of the FUN function
 nearest_neighbors = function(x, obs, k, FUN, p=NULL){
-  # Check if the number of observations is equal
+  # Checkeamos si el nro de observaciones es igual
   if (ncol(x) != length(obs)){stop('Series must have the same length')}
   
-  # Calculate the distance, considering p by Minkowski
-  dist = apply(x, 1, FUN, obs, p=p)
-  
+  # We calculate the distance, considering p by Minkowski
+  if(is.null(p)){
+    dist = parApply(cl, x, 1, FUN, obs)
+  }else{
+    dist = parApply(cl, x, 1, FUN, obs, p)
+  }
   # Find nearest neighbor
   idx = order(dist)[1:k]
   distances = dist[idx]
@@ -21,17 +24,7 @@ nearest_neighbors = function(x, obs, k, FUN, p=NULL){
     )
   }
   
-  # Create a nearest_neighbors object class
-  ret = list(
-    neighbor_ind = idx,
-    distances = distances,
-    obs = obs,
-    k = k,
-    FUN = match.fun(FUN),
-    p = p,
-    x = x
-  )
-  class(ret) <- "nearest_neighbors"
+  ret = list(neighbor_ind = idx, distances = distances) # ONS! the two lists are not corresponding!
   return(ret)
 }
 
